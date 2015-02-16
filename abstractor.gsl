@@ -1,0 +1,45 @@
+.template 0
+
+function global.abstractor__create_dirs(xml_root, projectdir)
+  if !defined(my.xml_root)
+    return
+  endif
+  
+  for my.xml_root.dir as d where !defined(d.disabled) | d.disabled <> "True"
+    if !file.exists(my.projectdir + d.relative_dst)
+      log('create directory "$(d.relative_dst:)"')
+      directory.create(my.projectdir + d.relative_dst)
+    endif
+
+    abstractor__create_dirs(d, my.projectdir)
+  endfor
+endfunction
+
+function global.abstractor__create_files(xml_root, projectdir, sourcedir)
+  if !defined(my.xml_root)
+    return
+  endif
+  
+  my.sourcedir ?= ""
+
+  for my.xml_root.file as f where type = "gsl"
+    gsl from "$(my.sourcedir + my.xml_root.relative_dst:)$(f.gsl_name:)"
+  endfor
+
+  for my.xml_root.file as f where type = "binary"
+    my.fn = my.xml_root.relative_dst + f.name
+    my.src = my.sourcedir + my.fn
+    my.dst = my.projectdir + my.fn
+    if !samefiles(my.src, my.dst)
+      log('copy file "$(my.fn:)"')
+      file.delete(my.dst)
+      file.copy(my.src, my.dst)
+    endif
+  endfor
+
+  for my.xml_root.dir as d where !defined(d.disabled) | d.disabled <> "True"
+    abstractor__create_files(d, my.projectdir, my.sourcedir)
+  endfor
+endfunction
+
+.endtemplate

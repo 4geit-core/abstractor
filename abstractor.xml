@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<core name="abstractor" version="0.1.0">
+  <core name="logger" required_version="0.1.0"/>
+
+  <function name="create_dirs"/>
+  <function name="create_files"/>
+</core>
