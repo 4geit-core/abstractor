@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
-<core name="abstractor" version="0.1.0">
-  <core name="logger" required_version="0.1.0"/>
+<core name="abstractor" branch="master">
+  <core name="logger" required_branch="master"/>
 
   <function name="create_dirs"/>
   <function name="create_files"/>
