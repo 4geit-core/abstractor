@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<core name="abstractor" branch="master">
+<core name="abstractor" branch="master" description="4i core library provides facilities for the abstractor tool (DEPRECATED)">
   <core name="logger" required_branch="master"/>
 
   <function name="create_dirs"/>
